@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from '../../../components/AppIcon';
 import Button from '../../../components/ui/Button';
 
-const DashboardHeader = ({ userName = "Carlos Mendoza", businessName = "Barbería El Clásico", onExportReport, onQuickAction }) => {
+const DashboardHeader = ({ userName = "", businessName = "", onExportReport, onQuickAction }) => {
   const currentDate = new Date()?.toLocaleDateString('es-ES', {
     weekday: 'long',
     year: 'numeric',

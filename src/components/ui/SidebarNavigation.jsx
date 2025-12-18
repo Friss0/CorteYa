@@ -163,49 +163,7 @@ const SidebarNavigation = ({ isCollapsed = false, onToggle, userRole = 'business
               })}
             </ul>
 
-            {/* Quick Actions Section - Compact like admin */}
-            <div className="mt-6 px-2">
-              {!isCollapsed &&
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-1">
-                  Acciones Rápidas
-                </h3>
-              }
-              <div className="space-y-1">
-                <button
-                  onClick={() => console.log('Quick appointment booking')}
-                  className={`
-                    w-full flex items-center px-2 py-2 rounded-lg text-sm font-body transition-micro
-                    text-accent hover:bg-accent/10 hover:scale-[0.98]
-                    ${isCollapsed ? 'justify-center' : 'justify-start'}
-                  `}
-                  title={isCollapsed ? 'Cita rápida' : ''}>
 
-                  <Icon
-                    name="Plus"
-                    size={16}
-                    className={isCollapsed ? '' : 'mr-2'} />
-
-                  {!isCollapsed && <span className="text-sm">Nueva Cita</span>}
-                </button>
-
-                <button
-                  onClick={() => console.log('View today schedule')}
-                  className={`
-                    w-full flex items-center px-2 py-2 rounded-lg text-sm font-body transition-micro
-                    text-muted-foreground hover:bg-muted hover:scale-[0.98]
-                    ${isCollapsed ? 'justify-center' : 'justify-start'}
-                  `}
-                  title={isCollapsed ? 'Agenda de hoy' : ''}>
-
-                  <Icon
-                    name="Clock"
-                    size={16}
-                    className={isCollapsed ? '' : 'mr-2'} />
-
-                  {!isCollapsed && <span className="text-sm">Agenda Hoy</span>}
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* User Section - Compact like admin */}

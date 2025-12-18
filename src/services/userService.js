@@ -87,8 +87,14 @@ export const userService = {
             // 2. Save data to barbershops/{nextId}
             const newRef = ref(db, `${COLLECTION_NAME}/${nextId}`);
 
+            // Generate random stats
+            const randomRating = (Math.random() * (5.0 - 0.1) + 0.1).toFixed(1); // 0.1 to 5.0
+            const randomReviews = Math.floor(Math.random() * 1000) + 1; // 1 to 1000
+
             await set(newRef, {
                 ...userData,
+                rating: parseFloat(randomRating),
+                reviews: randomReviews,
                 createdAt: timestamp,
                 updatedAt: timestamp,
                 status: userData.status || 'active'

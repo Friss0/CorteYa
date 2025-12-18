@@ -68,16 +68,7 @@ const AdminHeader = ({ onCreateUser, onRefresh, lastUpdated, stats }) => {
                 Actualizar
               </Button>
 
-              <Button
-                variant="default"
-                size="sm"
-                onClick={onCreateUser}
-                iconName="UserPlus"
-                iconPosition="left"
-              >
-                <span className="hidden sm:inline">Nuevo Usuario</span>
-                <span className="sm:hidden">Nuevo</span>
-              </Button>
+
             </div>
 
             {/* Admin Profile */}
