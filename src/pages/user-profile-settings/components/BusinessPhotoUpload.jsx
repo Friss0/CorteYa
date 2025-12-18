@@ -16,7 +16,28 @@ const BusinessPhotoUpload = ({ refreshTrigger }) => {
     }
   }, []);
 
-  // ... state ...
+  // State for business data and photos
+  const [businessData, setBusinessData] = useState({});
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [coverPhoto, setCoverPhoto] = useState(null);
+
+  // Upload and Cropping State
+  const [activeUpload, setActiveUpload] = useState(null); // 'profile' or 'cover'
+  const [profilePreview, setProfilePreview] = useState(null);
+  const [coverPreview, setCoverPreview] = useState(null);
+  const [profileCropping, setProfileCropping] = useState(false);
+  const [coverCropping, setCoverCropping] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+
+  // Crop Settings
+  const [cropData, setCropData] = useState({
+    profile: { x: 0, y: 0, width: 150, height: 150, scale: 1 },
+    cover: { x: 0, y: 0, width: 400, height: 200, scale: 1 }
+  });
+
+  // Refs
+  const profileInputRef = useRef(null);
+  const coverInputRef = useRef(null);
 
   // Load existing business data on component mount or refresh trigger
   useEffect(() => {

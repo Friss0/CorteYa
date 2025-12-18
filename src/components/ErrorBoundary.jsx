@@ -14,6 +14,8 @@ class ErrorBoundary extends React.Component {
   componentDidCatch(error, errorInfo) {
     error.__ErrorBoundary = true;
     window.__COMPONENT_ERROR__?.(error, errorInfo);
+    // Store error info in state for display
+    this.setState({ error, errorInfo });
     // console.log("Error caught by ErrorBoundary:", error, errorInfo);
   }
 
@@ -33,6 +35,13 @@ class ErrorBoundary extends React.Component {
             <div className="flex flex-col gap-1 text-center">
               <h1 className="text-2xl font-medium text-neutral-800">Something went wrong</h1>
               <p className="text-neutral-600 text-base w w-8/12 mx-auto">We encountered an unexpected error while processing your request.</p>
+
+              <div className="mt-4 p-4 bg-red-50 text-red-800 text-sm font-mono text-left rounded overflow-auto max-h-60 w-full border border-red-200">
+                <p className="font-bold mb-2">Error Details:</p>
+                <p>{this.state.error && this.state.error.toString()}</p>
+                <br />
+                <p className="whitespace-pre-wrap">{this.state.errorInfo && this.state.errorInfo.componentStack}</p>
+              </div>
             </div>
             <div className="flex justify-center items-center mt-6">
               <button
