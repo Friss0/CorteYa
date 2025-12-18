@@ -21,6 +21,7 @@ const defaultOpeningHours = {
 const BusinessInfoTab = ({ onUpdate }) => {
   // Get User ID from session
   const [userId, setUserId] = useState(null);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     const session = localStorage.getItem('barberTurnUser');
@@ -41,9 +42,9 @@ const BusinessInfoTab = ({ onUpdate }) => {
     website: '',
     description: '',
     lat: '',
-    lng: '', // Coordinates required for Mobile Map
+    lng: '',
     services: [],
-    openingHours: defaultOpeningHours
+    openingHours: JSON.parse(JSON.stringify(defaultOpeningHours)) // Deep copy
   });
 
   // Barbers management
@@ -110,6 +111,16 @@ const BusinessInfoTab = ({ onUpdate }) => {
     try {
       const { data, error } = await FirebaseBusinessPhotosService.getBusinessWithPhotos(userId, userId);
       if (data && !error) {
+        // Safe Merge for Opening Hours
+        const mergedHours = { ...defaultOpeningHours };
+        if (data.openingHours) {
+          Object.keys(defaultOpeningHours).forEach(day => {
+            if (data.openingHours[day]) {
+              mergedHours[day] = data.openingHours[day];
+            }
+          });
+        }
+
         setBusinessData({
           businessName: data.businessName || '',
           address: data.address || '',
@@ -123,10 +134,10 @@ const BusinessInfoTab = ({ onUpdate }) => {
           lat: data.lat || '',
           lng: data.lng || '',
           services: data.services || [],
-          openingHours: data.openingHours || defaultOpeningHours
+          openingHours: mergedHours
         });
 
-        // Populate Barbers and Services from loaded data
+        // Populate Barbers
         if (data.barbersDict) {
           const barberArray = Object.values(data.barbersDict).map(b => ({
             id: b.id,
@@ -137,6 +148,7 @@ const BusinessInfoTab = ({ onUpdate }) => {
           if (barberArray.length > 0) setBarbers(barberArray);
         }
 
+        // Populate Services
         if (data.servicesDict) {
           const serviceArray = Object.values(data.servicesDict).map(s => ({
             id: s.id,
@@ -150,17 +162,14 @@ const BusinessInfoTab = ({ onUpdate }) => {
 
         setBusinessExists(true);
       } else {
-        // Default data for new business
-        setBusinessData(prev => ({
-          ...prev,
-          businessName: '',
-          address: '',
-        }));
+        // New business - Keep defaults
         setBusinessExists(false);
       }
     } catch (error) {
       console.error('Error loading business data:', error);
       setBusinessExists(false);
+    } finally {
+      setIsDataLoaded(true);
     }
   };
 
@@ -209,11 +218,13 @@ const BusinessInfoTab = ({ onUpdate }) => {
     const newErrors = {};
 
     // Basic Fields
-    if (!businessData.businessName) newErrors.businessName = 'El nombre es obligatorio';
-    if (!businessData.address) newErrors.address = 'La dirección es obligatoria';
-    if (!businessData.city) newErrors.city = 'La ciudad es obligatoria';
-    if (!businessData.lat) newErrors.lat = 'La latitud es obligatoria';
-    if (!businessData.lng) newErrors.lng = 'La longitud es obligatoria';
+    if (!businessData.businessName.trim()) newErrors.businessName = 'El nombre es obligatorio';
+    if (!businessData.address.trim()) newErrors.address = 'La dirección es obligatoria';
+    if (!businessData.city.trim()) newErrors.city = 'La ciudad es obligatoria';
+    // Check for empty string OR 0 (though 0 is technically valid, for a barbershop location it usually isn't strict 0,0)
+    // Using string check for safety
+    if (businessData.lat === '' || businessData.lat === null || businessData.lat === undefined) newErrors.lat = 'La latitud es obligatoria';
+    if (businessData.lng === '' || businessData.lng === null || businessData.lng === undefined) newErrors.lng = 'La longitud es obligatoria';
 
     // Strict Requirements for Map Visibility
     // 1. At least one day open
@@ -239,7 +250,11 @@ const BusinessInfoTab = ({ onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic formatting or validation if needed
+    if (!validateForm()) {
+      // alert('Por favor completa todos los campos requeridos');
+      return;
+    }
+
     setIsLoading(true);
     setSuccess('');
 
@@ -328,6 +343,15 @@ const BusinessInfoTab = ({ onUpdate }) => {
   const handleRemoveService = (serviceId) => {
     setBusinessServices(prev => prev.filter(service => service.id !== serviceId));
   };
+
+  if (!isDataLoaded) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        <span className="ml-3 text-muted-foreground">Cargando información...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -520,7 +544,7 @@ const BusinessInfoTab = ({ onUpdate }) => {
           </div>
 
           <div className="space-y-3">
-            {Object.entries(businessData.openingHours || defaultOpeningHours).map(([day, hours]) => (
+            {Object.entries(businessData.openingHours).map(([day, hours]) => (
               <div key={day} className="flex items-center space-x-4 p-3 bg-muted/30 rounded-md">
                 <div className="w-20 text-sm font-medium text-foreground">
                   {dayNames[day]}
