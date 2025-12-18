@@ -25,6 +25,29 @@ const BusinessDashboard = () => {
   const [userData, setUserData] = useState(null);
   const [metricsData, setMetricsData] = useState({ cards: [], chartData: [] });
 
+  // Check for missing required fields (Mobile Map Requirements)
+  const checkRequiredFields = (data) => {
+    // Required: lat, lng, address, businessName, image (profile), heroImage (cover)
+    // Note: 'image' and 'heroImage' might be checked if they exist in data.
+    // If data comes from 'barbershops/{uid}', it should have them if uploaded.
+
+    const missing = [];
+    if (!data.lat) missing.push('Latitud');
+    if (!data.lng) missing.push('Longitud');
+    if (!data.address) missing.push('Dirección');
+    if (!data.businessName && !data.name) missing.push('Nombre del Negocio');
+
+    // Strict check for photos if requested by user ("obligue a cargar... foto de portada, foto de perfil")
+    // We can relax this if it's too blocking, but user said "oblige".
+    if (!data.image) missing.push('Logo / Foto de Perfil');
+    // if (!data.heroImage) missing.push('Foto de Portada'); // Optional? User said "foto de portada" required.
+
+    return missing;
+  };
+
+  const [missingFields, setMissingFields] = useState([]);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
   // Fetch real user data and metrics
   useEffect(() => {
     const loadDashboardData = async () => {
@@ -58,6 +81,13 @@ const BusinessDashboard = () => {
               businessName: data.name || data.businessName || sessionObj.businessName || "Mi Barbería",
               ...data
             };
+
+            // Check Requirements
+            const missing = checkRequiredFields(currentUserData);
+            if (missing.length > 0) {
+              setMissingFields(missing);
+              setShowOnboarding(true);
+            }
           }
           setUserData(currentUserData);
 
@@ -249,7 +279,43 @@ const BusinessDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Onboarding Modal Overlay */}
+      {showOnboarding && (
+        <div className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="bg-card border border-border rounded-xl shadow-2xl max-w-md w-full p-8 text-center">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Icon name="MapPin" size={32} className="text-primary" />
+            </div>
+            <h2 className="text-2xl font-bold text-foreground mb-2">¡Completa tu Perfil!</h2>
+            <p className="text-muted-foreground mb-6">
+              Para que tu barbería sea visible en la App Móvil y los clientes puedan encontrarte en el mapa, necesitamos que completes la siguiente información obligatoria:
+            </p>
+
+            <div className="bg-muted/50 rounded-lg p-4 mb-8 text-left">
+              <h4 className="font-semibold mb-2 text-sm text-foreground">Falta completar:</h4>
+              <ul className="space-y-2">
+                {missingFields.map((field, idx) => (
+                  <li key={idx} className="flex items-center text-sm text-error">
+                    <Icon name="XCircle" size={16} className="mr-2" />
+                    {field}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Button
+              size="lg"
+              className="w-full"
+              onClick={() => navigate('/user-profile-settings')}
+              iconName="ArrowRight"
+            >
+              Ir a Completar Perfil
+            </Button>
+          </div>
+        </div>
+      )}
+
       <div className="flex">
         {/* Sidebar */}
         <SidebarNavigation

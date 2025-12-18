@@ -30,6 +30,8 @@ const BusinessInfoTab = () => {
     email: '',
     website: '',
     description: '',
+    lat: '',
+    lng: '', // Coordinates required for Mobile Map
     services: [],
     openingHours: {
       monday: { open: '09:00', close: '20:00', closed: false },
@@ -116,6 +118,8 @@ const BusinessInfoTab = () => {
           email: data.email || '',
           website: data.website || '',
           description: data.description || '',
+          lat: data.lat || '',
+          lng: data.lng || '',
           services: data.services || [],
           openingHours: data.openingHours || businessData.openingHours
         });
@@ -354,6 +358,34 @@ const BusinessInfoTab = () => {
               error={errors.city}
               placeholder="Ciudad"
               required
+            />
+          </div>
+
+          {/* Coordinates Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label="Latitud"
+              type="number"
+              step="any"
+              name="lat"
+              value={businessData.lat}
+              onChange={handleInputChange}
+              error={errors.lat}
+              placeholder="-34.6037"
+              required
+              description="Requerido para el mapa de la app móvil"
+            />
+            <Input
+              label="Longitud"
+              type="number"
+              step="any"
+              name="lng"
+              value={businessData.lng}
+              onChange={handleInputChange}
+              error={errors.lng}
+              placeholder="-58.3816"
+              required
+              description="Requerido para el mapa de la app móvil"
             />
           </div>
 

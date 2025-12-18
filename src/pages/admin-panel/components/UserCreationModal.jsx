@@ -208,19 +208,18 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
 
       onClose();
 
-      // Reset form if creating (re-randomize)
+      // Reset form if creating
       if (!editMode) {
-        const randomLoc = generateRandomCabaLocation();
         setFormData({
           businessName: '',
           ownerName: '',
           dni: '',
           email: '',
           phone: '',
-          location: randomLoc.location,
-          address: randomLoc.address,
-          lat: randomLoc.lat,
-          lng: randomLoc.lng,
+          location: 'buenosaires', // Default to first option
+          address: '',
+          lat: '',
+          lng: '',
           subscriptionPlan: 'basic',
           sendWelcomeEmail: true,
           autoActivate: true
