@@ -56,7 +56,7 @@ export const userService = {
         });
     },
 
-    // Create a new user with Sequential ID (e.g. '05' -> '06')
+    // Create a new user with Sequential ID (e.g. '5' -> '6')
     createUser: async (userData) => {
         console.log("Creating user in Barbershops...", userData);
 
