@@ -66,7 +66,7 @@ export const userService = {
         try {
             // 1. Fetch existing keys to determine next ID
             const snapshot = await get(usersRef);
-            let nextId = "01"; // Default start
+            let nextId = "1"; // Default start (was 01)
 
             if (snapshot.exists()) {
                 const data = snapshot.val();
@@ -78,8 +78,8 @@ export const userService = {
                     return !isNaN(num) && num > max ? num : max;
                 }, 0);
 
-                // Increment and pad
-                nextId = String(maxId + 1).padStart(2, '0');
+                // Increment (No Padding)
+                nextId = String(maxId + 1);
             }
 
             console.log("Generated New Barbershop ID:", nextId);
