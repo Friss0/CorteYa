@@ -93,6 +93,9 @@ export const userService = {
 
             await set(newRef, {
                 ...userData,
+                // Ensure coordinates are stored as numbers for Mobile App
+                lat: userData.lat ? parseFloat(userData.lat) : null,
+                lng: userData.lng ? parseFloat(userData.lng) : null,
                 rating: randomRating, // Stored as String
                 reviews: String(randomReviews), // Stored as String
                 createdAt: timestamp,
