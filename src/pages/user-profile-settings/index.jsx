@@ -9,7 +9,6 @@ import Icon from '../../components/AppIcon';
 // Import tab components
 
 import BusinessInfoTab from './components/BusinessInfoTab';
-import SubscriptionTab from './components/SubscriptionTab';
 import NotificationTab from './components/NotificationTab';
 import SecurityTab from './components/SecurityTab';
 import BusinessPhotoUpload from './components/BusinessPhotoUpload';
@@ -27,12 +26,6 @@ const UserProfileSettings = () => {
       label: 'Información del Negocio',
       icon: 'Store',
       description: 'Datos de tu barbería'
-    },
-    {
-      id: 'subscription',
-      label: 'Suscripción',
-      icon: 'CreditCard',
-      description: 'Plan y facturación'
     },
     {
       id: 'notifications',
@@ -72,8 +65,7 @@ const UserProfileSettings = () => {
     switch (activeTab) {
       case 'business':
         return <BusinessInfoTab onUpdate={() => setHeaderRefreshTrigger(Date.now())} />;
-      case 'subscription':
-        return <SubscriptionTab />;
+
       case 'notifications':
         return <NotificationTab />;
       case 'security':
@@ -182,7 +174,7 @@ const UserProfileSettings = () => {
                       key={tab?.id}
                       onClick={() => handleTabChange(tab?.id)}
                       className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === tab?.id
-                          ? 'border-primary text-primary bg-primary/5' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                        ? 'border-primary text-primary bg-primary/5' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                         }`}
                     >
                       <Icon name={tab?.icon} size={16} />

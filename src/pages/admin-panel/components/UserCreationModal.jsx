@@ -13,7 +13,7 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
     email: '',
     phone: '',
     location: '',
-    subscriptionPlan: 'basic',
+    location: '',
     sendWelcomeEmail: true,
     autoActivate: true
   });
@@ -21,11 +21,7 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const planOptions = [
-    { value: 'trial', label: 'Prueba Gratuita (30 días)' },
-    { value: 'basic', label: 'Plan Básico - €29/mes' },
-    { value: 'premium', label: 'Plan Premium - €59/mes' }
-  ];
+
 
   const locationOptions = [
     { value: 'buenosaires', label: 'Buenos Aires' },
@@ -63,7 +59,7 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
         email: userData?.email || '',
         phone: userData?.phone || '',
         location: userData?.location || 'buenosaires',
-        subscriptionPlan: userData?.subscriptionPlan || 'basic',
+        location: userData?.location || 'buenosaires',
         sendWelcomeEmail: false,
         autoActivate: userData?.status === 'active'
       });
@@ -75,7 +71,7 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
         email: '',
         phone: '',
         location: 'buenosaires',
-        subscriptionPlan: 'basic',
+
         sendWelcomeEmail: true,
         autoActivate: true
       });
@@ -182,7 +178,7 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
           email: '',
           phone: '',
           location: 'buenosaires', // Default to first option
-          subscriptionPlan: 'basic',
+
           sendWelcomeEmail: true,
           autoActivate: true
         });

@@ -29,7 +29,7 @@ export const FirebaseBusinessPhotosService = {
 
       // MAPPING DB -> UI
       const uiData = {
-        businessName: dbData.name || '',
+        businessName: dbData.name || dbData.businessName || '',
         address: dbData.address || '',
         city: dbData.city || 'Buenos Aires', // Default if missing
         province: dbData.province || 'buenosaires',
@@ -37,6 +37,8 @@ export const FirebaseBusinessPhotosService = {
         email: dbData.email || '',
         description: dbData.description || '',
         website: dbData.website || '',
+        lat: dbData.lat || '',
+        lng: dbData.lng || '',
 
         // Images
         profilePhotoUrl: dbData.image || null,
@@ -79,6 +81,8 @@ export const FirebaseBusinessPhotosService = {
         email: uiData.email,
         description: uiData.description,
         website: uiData.website,
+        lat: uiData.lat,
+        lng: uiData.lng,
         updatedAt: Date.now(),
 
         // Hours

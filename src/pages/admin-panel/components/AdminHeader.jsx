@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button';
 import UserProfileDropdown from '../../../components/ui/UserProfileDropdown';
 import BreadcrumbNavigation from '../../../components/ui/BreadcrumbNavigation';
 
-const AdminHeader = ({ onCreateUser, onRefresh, lastUpdated }) => {
+const AdminHeader = ({ onCreateUser, onRefresh, lastUpdated, stats }) => {
   const formatLastUpdated = (timestamp) => {
     return new Date(timestamp)?.toLocaleString('es-ES', {
       day: '2-digit',
@@ -30,7 +30,7 @@ const AdminHeader = ({ onCreateUser, onRefresh, lastUpdated }) => {
       <div className="px-6 py-4">
         {/* Breadcrumb */}
         <BreadcrumbNavigation customBreadcrumbs={customBreadcrumbs} />
-        
+
         {/* Header Content */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Title and Description */}
@@ -67,7 +67,7 @@ const AdminHeader = ({ onCreateUser, onRefresh, lastUpdated }) => {
               >
                 Actualizar
               </Button>
-              
+
               <Button
                 variant="default"
                 size="sm"
@@ -96,37 +96,37 @@ const AdminHeader = ({ onCreateUser, onRefresh, lastUpdated }) => {
               <Icon name="Users" size={16} className="text-primary" />
               <div>
                 <p className="text-sm font-medium text-foreground">Usuarios Totales</p>
-                <p className="text-lg font-bold text-primary">52</p>
+                <p className="text-lg font-bold text-primary">{stats?.totalUsers || 0}</p>
               </div>
             </div>
           </div>
-          
+
           <div className="bg-muted rounded-lg p-3">
             <div className="flex items-center space-x-2">
               <Icon name="UserCheck" size={16} className="text-success" />
               <div>
                 <p className="text-sm font-medium text-foreground">Activos Hoy</p>
-                <p className="text-lg font-bold text-success">50</p>
+                <p className="text-lg font-bold text-success">{stats?.activeUsers || 0}</p>
               </div>
             </div>
           </div>
-          
+
           <div className="bg-muted rounded-lg p-3">
             <div className="flex items-center space-x-2">
               <Icon name="Calendar" size={16} className="text-accent" />
               <div>
                 <p className="text-sm font-medium text-foreground">Citas Hoy</p>
-                <p className="text-lg font-bold text-accent">240</p>
+                <p className="text-lg font-bold text-accent">{stats?.platformUsage?.appointmentsToday || 0}</p>
               </div>
             </div>
           </div>
-          
+
           <div className="bg-muted rounded-lg p-3">
             <div className="flex items-center space-x-2">
               <Icon name="AlertCircle" size={16} className="text-warning" />
               <div>
                 <p className="text-sm font-medium text-foreground">Tickets Abiertos</p>
-                <p className="text-lg font-bold text-warning">12</p>
+                <p className="text-lg font-bold text-warning">{stats?.platformUsage?.openTickets || 0}</p>
               </div>
             </div>
           </div>

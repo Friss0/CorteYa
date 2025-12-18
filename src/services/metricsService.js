@@ -24,27 +24,21 @@ export const MetricsService = {
             const totalUsers = users.length;
             const activeUsers = users.filter(u => u.status === 'active').length;
 
-            // 2. Subscription Distribution
-            const basicCount = users.filter(u => u.subscriptionPlan === 'basic').length;
-            const premiumCount = users.filter(u => u.subscriptionPlan === 'premium').length;
-            const trialCount = users.filter(u => !u.subscriptionPlan || u.subscriptionPlan === 'trial').length;
-
-            // 3. Estimated Revenue (Mock based on plan)
-            // Basic = 29, Premium = 59
-            const currentMonthlyRevenue = (basicCount * 29) + (premiumCount * 59);
+            // 2. Revenue (Single Plan: 14.999 ARS)
+            // Assuming strict revenue comes from Active users
+            const planPrice = 14999;
+            const currentMonthlyRevenue = activeUsers * planPrice;
 
             // Return formatted data matches AdminPanel expectation
             return {
                 totalUsers,
                 activeUsers,
                 subscriptionDistribution: [
-                    { name: 'Básico', value: basicCount },
-                    { name: 'Premium', value: premiumCount },
-                    { name: 'Prueba', value: trialCount }
+                    { name: 'Plan Estándar', value: activeUsers }
                 ],
                 revenueData: {
                     monthly: currentMonthlyRevenue,
-                    // Mock breakdown for charts (since we don't have historical data stored yet)
+                    // Mock breakdown for charts (proportional to current for now)
                     monthly_breakdown: [
                         { month: 'Abr', revenue: currentMonthlyRevenue * 0.8 },
                         { month: 'May', revenue: currentMonthlyRevenue * 0.9 },
@@ -58,16 +52,17 @@ export const MetricsService = {
                     { month: 'Jun', users: totalUsers }
                 ],
                 platformUsage: {
-                    // Placeholder values until we have an Appointments collection
-                    appointmentsToday: users.length * 12,
-                    appointmentsWeek: users.length * 80,
-                    appointmentsMonth: users.length * 320,
-                    activeSessions: Math.floor(users.length * 0.2), // 20% users online
+                    // Requested Hardcoded Values
+                    appointmentsToday: 0,
+                    appointmentsWeek: 0,
+                    appointmentsMonth: 0,
+                    // Active today mapped to Active Users count for now
+                    activeSessions: activeUsers,
                     avgSessionTime: 15,
-                    pageViews: users.length * 150,
-                    openTickets: 5,
-                    resolvedToday: 2,
-                    avgResponseTime: 1.5
+                    pageViews: activeUsers * 20,
+                    openTickets: 0,
+                    resolvedToday: 0,
+                    avgResponseTime: 0
                 }
             };
         } catch (error) {

@@ -100,7 +100,7 @@ const BusinessDashboard = () => {
           const cards = finalMetrics.cards || [];
           const chartData = finalMetrics.chartData || [];
 
-          const defaultWidgets = [
+          const allWidgets = [
             {
               id: 'metrics-revenue',
               type: 'metric',
@@ -178,7 +178,32 @@ const BusinessDashboard = () => {
             }
           ];
 
-          setDashboardWidgets(defaultWidgets);
+          // Load Saved Layout
+          const savedLayoutKey = `barberTurn_dashboardLayout_${uid}`;
+          const savedLayout = localStorage.getItem(savedLayoutKey);
+
+          let finalWidgets = allWidgets;
+
+          if (savedLayout) {
+            try {
+              const savedIds = JSON.parse(savedLayout);
+              // Filter to keep only those present in saved layout, AND sort them
+              // Note: New widgets not in saved layout will differ. Currently we only support "what was saved".
+              // If we want to add new default widgets, we need to merge.
+              // For simplicity: If saved exists, use it to order and filter.
+
+              const widgetMap = new Map(allWidgets.map(w => [w.id, w]));
+
+              finalWidgets = savedIds
+                .map(id => widgetMap.get(id))
+                .filter(Boolean); // Remove nulls (deleted or renamed widgets)
+
+            } catch (e) {
+              console.error("Error parsing saved layout", e);
+            }
+          }
+
+          setDashboardWidgets(finalWidgets);
         }
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
@@ -189,6 +214,20 @@ const BusinessDashboard = () => {
 
     loadDashboardData();
   }, []);
+
+  // Helper to save layout
+  const saveLayoutState = (widgets) => {
+    try {
+      const session = localStorage.getItem('barberTurnUser');
+      if (session) {
+        const uid = JSON.parse(session).uid;
+        const layoutIds = widgets.map(w => w.id);
+        localStorage.setItem(`barberTurn_dashboardLayout_${uid}`, JSON.stringify(layoutIds));
+      }
+    } catch (e) {
+      console.error("Error saving layout", e);
+    }
+  };
 
   const handleSidebarToggle = () => {
     setSidebarCollapsed(!sidebarCollapsed);
@@ -235,10 +274,13 @@ const BusinessDashboard = () => {
     const [movedWidget] = updatedWidgets?.splice(fromIndex, 1);
     updatedWidgets?.splice(toIndex, 0, movedWidget);
     setDashboardWidgets(updatedWidgets);
+    saveLayoutState(updatedWidgets);
   };
 
   const handleRemoveWidget = (widgetId) => {
-    setDashboardWidgets(prev => prev?.filter(widget => widget?.id !== widgetId));
+    const updatedWidgets = dashboardWidgets?.filter(widget => widget?.id !== widgetId);
+    setDashboardWidgets(updatedWidgets);
+    saveLayoutState(updatedWidgets);
   };
 
   const handleAddWidget = (widgetConfig) => {
@@ -270,7 +312,9 @@ const BusinessDashboard = () => {
       )
     };
 
-    setDashboardWidgets(prev => [...prev, newWidget]);
+    const updatedWidgets = [...dashboardWidgets, newWidget];
+    setDashboardWidgets(updatedWidgets);
+    saveLayoutState(updatedWidgets);
     setWidgetLibraryOpen(false);
   };
 

@@ -13,8 +13,11 @@ const BusinessPhotoUpload = ({ refreshTrigger }) => {
     if (session) {
       const sessionObj = JSON.parse(session);
       setUserId(sessionObj.uid);
+      setSessionName(sessionObj.businessName || sessionObj.name);
     }
   }, []);
+
+  const [sessionName, setSessionName] = useState('');
 
   // State for business data and photos
   const [businessData, setBusinessData] = useState({});
@@ -372,15 +375,7 @@ const BusinessPhotoUpload = ({ refreshTrigger }) => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-border pb-4">
-        <div className="flex items-center space-x-3 mb-2">
-          <Icon name="Camera" size={20} className="text-primary" />
-          <h3 className="text-lg font-semibold text-foreground">Fotos de la Barbería</h3>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          Personaliza el perfil de tu barbería con una foto de perfil y una foto de portada
-        </p>
-      </div>
+
 
       {!profileCropping && !coverCropping && (
         <>
@@ -465,87 +460,34 @@ const BusinessPhotoUpload = ({ refreshTrigger }) => {
               <div className="space-y-4">
                 <div>
                   <h4 className="text-lg font-semibold text-foreground">
-                    {businessData?.businessName || 'Barbería El Corte Perfecto'}
+                    {businessData?.businessName || sessionName || 'Tu Barbería'}
                   </h4>
                   <p className="text-sm text-muted-foreground">
-                    {businessData?.address || 'Calle Mayor 123'}, {businessData?.city || 'Madrid'}
+                    {businessData?.address ? (
+                      <>
+                        {businessData.address}
+                        {businessData.city ? `, ${businessData.city}` : ''}
+                      </>
+                    ) : (
+                      'Dirección no configurada'
+                    )}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Foto de Perfil</label>
-                    <div className="flex space-x-2">
-                      <input
-                        ref={profileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleFileSelect(e, 'profile')}
-                        className="hidden"
-                      />
-
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => profileInputRef.current?.click()}
-                        disabled={isUploading}
-                        iconName="Upload"
-                        iconPosition="left"
-                      >
-                        {profilePhoto ? 'Cambiar' : 'Subir'}
-                      </Button>
-
-                      {profilePhoto && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleRemovePhoto('profile')}
-                          disabled={isUploading}
-                          iconName="Trash2"
-                          iconPosition="left"
-                        >
-                          Eliminar
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">Foto de Portada</label>
-                    <div className="flex space-x-2">
-                      <input
-                        ref={coverInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleFileSelect(e, 'cover')}
-                        className="hidden"
-                      />
-
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => coverInputRef.current?.click()}
-                        disabled={isUploading}
-                        iconName="Upload"
-                        iconPosition="left"
-                      >
-                        {coverPhoto ? 'Cambiar' : 'Subir'}
-                      </Button>
-
-                      {coverPhoto && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleRemovePhoto('cover')}
-                          disabled={isUploading}
-                          iconName="Trash2"
-                          iconPosition="left"
-                        >
-                          Eliminar
-                        </Button>
-                      )}
-                    </div>
-                  </div>
+                {/* Hidden Inputs for Refs - Required for Hover/Click interactions */}
+                <div className="hidden">
+                  <input
+                    ref={profileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileSelect(e, 'profile')}
+                  />
+                  <input
+                    ref={coverInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileSelect(e, 'cover')}
+                  />
                 </div>
               </div>
             </div>

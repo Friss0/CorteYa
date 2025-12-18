@@ -174,6 +174,7 @@ const AdminPanel = () => {
           onCreateUser={() => setIsCreateModalOpen(true)}
           onRefresh={handleRefresh}
           lastUpdated={lastUpdated}
+          stats={analyticsData}
         />
 
         {/* Content Area - Full width layout */}

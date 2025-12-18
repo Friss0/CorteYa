@@ -9,7 +9,6 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
-  const [filterPlan, setFilterPlan] = useState('all');
   const [sortBy, setSortBy] = useState('registrationDate');
   const [sortOrder, setSortOrder] = useState('desc');
 
@@ -20,12 +19,7 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
     { value: 'suspended', label: 'Suspendido' }
   ];
 
-  const planOptions = [
-    { value: 'all', label: 'Todos los planes' },
-    { value: 'basic', label: 'Plan Básico' },
-    { value: 'premium', label: 'Plan Premium' },
-    { value: 'trial', label: 'Prueba Gratuita' }
-  ];
+
 
   const sortOptions = [
     { value: 'registrationDate', label: 'Fecha de registro' },
@@ -36,21 +30,19 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
 
   const filteredUsers = users?.filter(user => {
     const matchesSearch = user?.businessName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-                         user?.ownerName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
-                         user?.email?.toLowerCase()?.includes(searchTerm?.toLowerCase());
+      user?.ownerName?.toLowerCase()?.includes(searchTerm?.toLowerCase()) ||
+      user?.email?.toLowerCase()?.includes(searchTerm?.toLowerCase());
     const matchesStatus = filterStatus === 'all' || user?.status === filterStatus;
-    const matchesPlan = filterPlan === 'all' || user?.subscriptionPlan === filterPlan;
-    
-    return matchesSearch && matchesStatus && matchesPlan;
+    return matchesSearch && matchesStatus;
   })?.sort((a, b) => {
     const aValue = a?.[sortBy];
     const bValue = b?.[sortBy];
     const modifier = sortOrder === 'asc' ? 1 : -1;
-    
+
     if (sortBy === 'registrationDate' || sortBy === 'lastActivity') {
       return (new Date(aValue) - new Date(bValue)) * modifier;
     }
-    
+
     return aValue?.localeCompare(bValue) * modifier;
   });
 
@@ -76,7 +68,7 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
       inactive: { color: 'bg-muted text-muted-foreground', label: 'Inactivo' },
       suspended: { color: 'bg-error text-error-foreground', label: 'Suspendido' }
     };
-    
+
     const config = statusConfig?.[status] || statusConfig?.inactive;
     return (
       <span className={`px-2 py-1 rounded-full text-xs font-medium ${config?.color}`}>
@@ -85,20 +77,7 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
     );
   };
 
-  const getPlanBadge = (plan) => {
-    const planConfig = {
-      basic: { color: 'bg-secondary text-secondary-foreground', label: 'Básico' },
-      premium: { color: 'bg-accent text-accent-foreground', label: 'Premium' },
-      trial: { color: 'bg-warning text-warning-foreground', label: 'Prueba' }
-    };
-    
-    const config = planConfig?.[plan] || planConfig?.basic;
-    return (
-      <span className={`px-2 py-1 rounded-full text-xs font-medium ${config?.color}`}>
-        {config?.label}
-      </span>
-    );
-  };
+
 
   const formatDate = (dateString) => {
     return new Date(dateString)?.toLocaleDateString('es-ES', {
@@ -130,13 +109,7 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
               placeholder="Estado"
               className="w-full sm:w-40"
             />
-            <Select
-              options={planOptions}
-              value={filterPlan}
-              onChange={setFilterPlan}
-              placeholder="Plan"
-              className="w-full sm:w-40"
-            />
+
             <Select
               options={sortOptions}
               value={sortBy}
@@ -196,7 +169,7 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
               </th>
               <th className="p-4 text-left text-sm font-semibold text-foreground">Negocio</th>
               <th className="p-4 text-left text-sm font-semibold text-foreground">Propietario</th>
-              <th className="p-4 text-left text-sm font-semibold text-foreground">Plan</th>
+
               <th className="p-4 text-left text-sm font-semibold text-foreground">Estado</th>
               <th className="p-4 text-left text-sm font-semibold text-foreground">Registro</th>
               <th className="p-4 text-left text-sm font-semibold text-foreground">Última Actividad</th>
@@ -229,9 +202,7 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
                     <p className="text-sm text-muted-foreground">{user?.email}</p>
                   </div>
                 </td>
-                <td className="p-4">
-                  {getPlanBadge(user?.subscriptionPlan)}
-                </td>
+
                 <td className="p-4">
                   {getStatusBadge(user?.status)}
                 </td>
@@ -295,16 +266,13 @@ const UserManagementTable = ({ users, onUserAction, onBulkAction }) => {
                 />
               </div>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div>
                 <p className="text-muted-foreground">Email:</p>
                 <p className="text-foreground">{user?.email}</p>
               </div>
-              <div>
-                <p className="text-muted-foreground">Plan:</p>
-                {getPlanBadge(user?.subscriptionPlan)}
-              </div>
+
               <div>
                 <p className="text-muted-foreground">Estado:</p>
                 {getStatusBadge(user?.status)}
