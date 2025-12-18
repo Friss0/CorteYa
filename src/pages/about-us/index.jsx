@@ -54,14 +54,11 @@ const AboutUsPage = () => {
                             transition={{ duration: 0.6 }}
                             className="rounded-[40px] overflow-hidden shadow-2xl h-[400px] md:h-[500px] bg-gray-100 flex items-center justify-center relative group"
                         >
-                            <div className="text-gray-400 text-center">
-                                <span className="block text-4xl mb-2">📸</span>
-                                <span className="font-medium">Espacio para foto del equipo</span>
-                            </div>
-                            {/* Overlay hint */}
-                            <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                <p className="text-black font-medium">Dimensiones sugeridas: 800x800</p>
-                            </div>
+                            <img
+                                src="/assets/images/team-about-us.jpg"
+                                alt="Equipo de BarberTurn"
+                                className="w-full h-full object-cover"
+                            />
                         </motion.div>
 
                         {/* Values Text */}
