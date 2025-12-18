@@ -53,30 +53,6 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
     { value: 'santiago', label: 'Santiago del Estero' }
   ];
 
-  // Helper to generate random CABA location
-  const generateRandomCabaLocation = () => {
-    // CABA rough bounds
-    const minLat = -34.69;
-    const maxLat = -34.54;
-    const minLng = -58.52;
-    const maxLng = -58.36;
-
-    const lat = (Math.random() * (maxLat - minLat) + minLat).toFixed(6);
-    const lng = (Math.random() * (maxLng - minLng) + minLng).toFixed(6);
-
-    // Generic streets
-    const streets = ['Av. Corrientes', 'Av. Rivadavia', 'Av. Santa Fe', 'Av. Cabildo', 'Av. Córdoba', 'Jerónimo Salguero', 'Gurruchaga', 'Thames'];
-    const street = streets[Math.floor(Math.random() * streets.length)];
-    const number = Math.floor(Math.random() * 8000) + 1;
-
-    return {
-      lat: parseFloat(lat),
-      lng: parseFloat(lng),
-      address: `${street} ${number}, CABA`,
-      location: 'buenosaires' // Province
-    };
-  };
-
   // Load user data when editing
   useEffect(() => {
     if (editMode && userData) {
@@ -87,26 +63,18 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
         email: userData?.email || '',
         phone: userData?.phone || '',
         location: userData?.location || 'buenosaires',
-        address: userData?.address || '',
-        lat: userData?.lat || '',
-        lng: userData?.lng || '',
         subscriptionPlan: userData?.subscriptionPlan || 'basic',
         sendWelcomeEmail: false,
         autoActivate: userData?.status === 'active'
       });
     } else {
-      // New User: Pre-fill random CABA location
-      const randomLoc = generateRandomCabaLocation();
       setFormData({
         businessName: '',
         ownerName: '',
         dni: '',
         email: '',
         phone: '',
-        location: randomLoc.location,
-        address: randomLoc.address,
-        lat: randomLoc.lat,
-        lng: randomLoc.lng,
+        location: 'buenosaires',
         subscriptionPlan: 'basic',
         sendWelcomeEmail: true,
         autoActivate: true
@@ -189,9 +157,6 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
         // Create new user
         const newUser = {
           ...formData,
-          // Ensure lat/lng are numbers
-          lat: parseFloat(formData.lat),
-          lng: parseFloat(formData.lng),
           password: formData.dni, // Use DNI as password
           status: formData?.autoActivate ? 'active' : 'inactive',
           registrationDate: new Date()?.toISOString(),
@@ -217,9 +182,6 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
           email: '',
           phone: '',
           location: 'buenosaires', // Default to first option
-          address: '',
-          lat: '',
-          lng: '',
           subscriptionPlan: 'basic',
           sendWelcomeEmail: true,
           autoActivate: true
@@ -299,37 +261,6 @@ const UserCreationModal = ({ isOpen, onClose, onCreateUser, editMode = false, us
                 error={errors?.location}
                 placeholder="Selecciona una ciudad"
                 required
-                disabled={isSubmitting}
-              />
-            </div>
-
-            {/* Address and Coords (New) */}
-            <div className="grid grid-cols-1 gap-4">
-              <Input
-                label="Dirección"
-                type="text"
-                placeholder="Ej: Av. Corrientes 1234, CABA"
-                value={formData?.address}
-                onChange={(e) => handleInputChange('address', e?.target?.value)}
-                disabled={isSubmitting}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <Input
-                label="Latitud"
-                type="number"
-                step="any"
-                value={formData?.lat}
-                onChange={(e) => handleInputChange('lat', e?.target?.value)}
-                disabled={isSubmitting}
-              />
-              <Input
-                label="Longitud"
-                type="number"
-                step="any"
-                value={formData?.lng}
-                onChange={(e) => handleInputChange('lng', e?.target?.value)}
                 disabled={isSubmitting}
               />
             </div>
