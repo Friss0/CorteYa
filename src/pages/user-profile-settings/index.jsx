@@ -19,6 +19,7 @@ const UserProfileSettings = () => {
   const [activeTab, setActiveTab] = useState('business');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [headerRefreshTrigger, setHeaderRefreshTrigger] = useState(0);
 
   const tabs = [
     {
@@ -70,7 +71,7 @@ const UserProfileSettings = () => {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'business':
-        return <BusinessInfoTab />;
+        return <BusinessInfoTab onUpdate={() => setHeaderRefreshTrigger(Date.now())} />;
       case 'subscription':
         return <SubscriptionTab />;
       case 'notifications':
@@ -78,7 +79,7 @@ const UserProfileSettings = () => {
       case 'security':
         return <SecurityTab />;
       default:
-        return <BusinessInfoTab />;
+        return <BusinessInfoTab onUpdate={() => setHeaderRefreshTrigger(Date.now())} />;
     }
   };
 
@@ -99,15 +100,14 @@ const UserProfileSettings = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Sidebar Navigation */}
-      <SidebarNavigation 
+      <SidebarNavigation
         isCollapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
         userRole="business"
       />
       {/* Main Content - Fixed margin to match admin panel and prevent overlap */}
-      <div className={`transition-all duration-200 ${
-        sidebarCollapsed ? 'ml-14' : 'ml-52'
-      }`}>
+      <div className={`transition-all duration-200 ${sidebarCollapsed ? 'ml-14' : 'ml-52'
+        }`}>
         {/* Header */}
         <header className="bg-card border-b border-border px-4 md:px-6 py-4">
           <div className="flex items-center justify-between">
@@ -120,7 +120,7 @@ const UserProfileSettings = () => {
               >
                 <Icon name={sidebarCollapsed ? 'ChevronRight' : 'ChevronLeft'} size={20} />
               </Button>
-              
+
               <div className="hidden md:block">
                 <h1 className="text-xl font-semibold text-foreground">
                   Mi Perfil
@@ -142,8 +142,8 @@ const UserProfileSettings = () => {
               >
                 Volver
               </Button>
-              
-              <UserProfileDropdown 
+
+              <UserProfileDropdown
                 userName="Carlos Rodríguez"
                 userRole="business"
                 userEmail="carlos.rodriguez@barberturn.com"
@@ -169,7 +169,7 @@ const UserProfileSettings = () => {
 
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Cover Photo and Profile Photo Section - Now at the top */}
-            <BusinessPhotoUpload />
+            <BusinessPhotoUpload refreshTrigger={headerRefreshTrigger} />
 
             {/* Profile Settings Content - Full width now */}
             <div className="bg-card border border-border rounded-lg overflow-hidden">
@@ -181,10 +181,9 @@ const UserProfileSettings = () => {
                     <button
                       key={tab?.id}
                       onClick={() => handleTabChange(tab?.id)}
-                      className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
-                        activeTab === tab?.id
-                          ? 'border-primary text-primary bg-primary/5' :'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
-                      }`}
+                      className={`flex items-center space-x-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTab === tab?.id
+                          ? 'border-primary text-primary bg-primary/5' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                        }`}
                     >
                       <Icon name={tab?.icon} size={16} />
                       <span>{tab?.label}</span>
@@ -205,7 +204,7 @@ const UserProfileSettings = () => {
                       </option>
                     ))}
                   </select>
-                  
+
                   <p className="text-sm text-muted-foreground mt-2">
                     {tabs?.find(tab => tab?.id === activeTab)?.description}
                   </p>
@@ -232,7 +231,7 @@ const UserProfileSettings = () => {
               >
                 Volver al Dashboard
               </Button>
-              
+
               <Button
                 variant="outline"
                 onClick={() => navigate('/appointment-management')}
@@ -261,7 +260,7 @@ const UserProfileSettings = () => {
                   Términos de Servicio
                 </button>
               </div>
-              
+
               <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Icon name="Shield" size={14} />
                 <span>Conexión segura</span>

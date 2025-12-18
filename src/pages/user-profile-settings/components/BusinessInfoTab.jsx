@@ -8,7 +8,7 @@ import Image from '../../../components/AppImage';
 import { FirebaseBusinessPhotosService } from '../../../lib/firebase-business-photos';
 import { CheckCircle, X } from 'lucide-react';
 
-const BusinessInfoTab = () => {
+const BusinessInfoTab = ({ onUpdate }) => {
   // Get User ID from session
   const [userId, setUserId] = useState(null);
 
@@ -34,13 +34,13 @@ const BusinessInfoTab = () => {
     lng: '', // Coordinates required for Mobile Map
     services: [],
     openingHours: {
-      monday: { open: '09:00', close: '20:00', closed: false },
-      tuesday: { open: '09:00', close: '20:00', closed: false },
-      wednesday: { open: '09:00', close: '20:00', closed: false },
-      thursday: { open: '09:00', close: '21:00', closed: false },
-      friday: { open: '09:00', close: '21:00', closed: false },
-      saturday: { open: '09:00', close: '18:00', closed: false },
-      sunday: { open: '10:00', close: '14:00', closed: false }
+      monday: { open: '09:00', close: '20:00', closed: true },
+      tuesday: { open: '09:00', close: '20:00', closed: true },
+      wednesday: { open: '09:00', close: '20:00', closed: true },
+      thursday: { open: '09:00', close: '21:00', closed: true },
+      friday: { open: '09:00', close: '21:00', closed: true },
+      saturday: { open: '09:00', close: '18:00', closed: true },
+      sunday: { open: '10:00', close: '14:00', closed: true }
     }
   });
 
@@ -204,8 +204,34 @@ const BusinessInfoTab = () => {
   };
 
   const validateForm = () => {
-    // Basic validation
-    return true;
+    const newErrors = {};
+
+    // Basic Fields
+    if (!businessData.businessName) newErrors.businessName = 'El nombre es obligatorio';
+    if (!businessData.address) newErrors.address = 'La dirección es obligatoria';
+    if (!businessData.city) newErrors.city = 'La ciudad es obligatoria';
+    if (!businessData.lat) newErrors.lat = 'La latitud es obligatoria';
+    if (!businessData.lng) newErrors.lng = 'La longitud es obligatoria';
+
+    // Strict Requirements for Map Visibility
+    // 1. At least one day open
+    const hasOpenDay = Object.values(businessData.openingHours).some(day => !day.closed);
+    if (!hasOpenDay) {
+      newErrors.openingHours = 'Debes abrir al menos un día para aparecer en el mapa';
+    }
+
+    // 2. At least one barber
+    if (barbers.length === 0) {
+      newErrors.barbers = 'Debes agregar al menos un barbero';
+    }
+
+    // 3. At least one service
+    if (businessServices.length === 0) {
+      newErrors.businessServices = 'Debes agregar al menos un servicio';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
@@ -231,6 +257,10 @@ const BusinessInfoTab = () => {
 
       setSuccess('La información de la barbería fue actualizada correctamente');
       setBusinessExists(true);
+
+      // Notify parent to refresh header
+      if (onUpdate) onUpdate();
+
     } catch (error) {
       console.error('Error saving business info:', error);
       alert('Error al actualizar la información. Inténtalo de nuevo.');

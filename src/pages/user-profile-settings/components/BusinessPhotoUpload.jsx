@@ -4,7 +4,7 @@ import AppImage from '../../../components/AppImage';
 import Icon from '../../../components/AppIcon';
 import { FirebaseBusinessPhotosService } from '../../../lib/firebase-business-photos';
 
-const BusinessPhotoUpload = () => {
+const BusinessPhotoUpload = ({ refreshTrigger }) => {
   // Get User ID from session
   const [userId, setUserId] = useState(null);
 
@@ -16,37 +16,14 @@ const BusinessPhotoUpload = () => {
     }
   }, []);
 
-  // Profile photo state
-  const [profilePhoto, setProfilePhoto] = useState(null);
-  const [profilePreview, setProfilePreview] = useState(null);
-  const [profileCropping, setProfileCropping] = useState(false);
+  // ... state ...
 
-  // Cover photo state
-  const [coverPhoto, setCoverPhoto] = useState(null);
-  const [coverPreview, setCoverPreview] = useState(null);
-  const [coverCropping, setCoverCropping] = useState(false);
-
-  // General state
-  const [isUploading, setIsUploading] = useState(false);
-  const [activeUpload, setActiveUpload] = useState(null); // 'profile' or 'cover'
-  const [businessData, setBusinessData] = useState(null);
-
-  // Crop data for both images
-  const [cropData, setCropData] = useState({
-    profile: { x: 0, y: 0, width: 150, height: 150, scale: 1 },
-    cover: { x: 0, y: 0, width: 400, height: 200, scale: 1 }
-  });
-
-  // File input refs
-  const profileInputRef = useRef(null);
-  const coverInputRef = useRef(null);
-
-  // Load existing business data on component mount
+  // Load existing business data on component mount or refresh trigger
   useEffect(() => {
     if (userId) {
       loadBusinessData();
     }
-  }, [userId]);
+  }, [userId, refreshTrigger]);
 
   const loadBusinessData = async () => {
     try {
