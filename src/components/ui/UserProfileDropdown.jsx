@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../AppIcon';
-import { FirebaseBusinessPhotosService } from '../../lib/firebase-business-photos';
+import FirebaseBusinessPhotosService from '../../lib/firebase-business-photos';
 
 const UserProfileDropdown = ({ userName = 'Usuario', userRole = 'business', userEmail = '' }) => {
   const [isOpen, setIsOpen] = useState(false);

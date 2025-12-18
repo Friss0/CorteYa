@@ -205,6 +205,17 @@ const BusinessDashboard = () => {
     }
   };
 
+  const handleLogout = () => {
+    // Clear all user session data from localStorage
+    localStorage.removeItem('barberTurnUser');
+    localStorage.removeItem('barberTurnLanguage');
+    localStorage.removeItem('barberTurnPreferences');
+    localStorage.removeItem('barberTurnSettings');
+
+    console.log('Usuario cerrado sesión exitosamente - desde Onboarding');
+    navigate('/user-login');
+  };
+
   const handleExportReport = () => {
     console.log('Exportando reporte del dashboard...');
     // Simulate export process
@@ -304,14 +315,26 @@ const BusinessDashboard = () => {
               </ul>
             </div>
 
-            <Button
-              size="lg"
-              className="w-full"
-              onClick={() => navigate('/user-profile-settings')}
-              iconName="ArrowRight"
-            >
-              Ir a Completar Perfil
-            </Button>
+            <div className="space-y-3">
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={() => navigate('/user-profile-settings')}
+                iconName="ArrowRight"
+              >
+                Ir a Completar Perfil
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full text-error border-error/50 hover:bg-error/10 hover:text-error hover:border-error"
+                onClick={handleLogout}
+                iconName="LogOut"
+              >
+                Cerrar Sesión
+              </Button>
+            </div>
           </div>
         </div>
       )}
