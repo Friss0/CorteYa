@@ -93,8 +93,8 @@ export const userService = {
 
             await set(newRef, {
                 ...userData,
-                rating: parseFloat(randomRating),
-                reviews: randomReviews,
+                rating: randomRating, // Stored as String
+                reviews: String(randomReviews), // Stored as String
                 createdAt: timestamp,
                 updatedAt: timestamp,
                 status: userData.status || 'active'
