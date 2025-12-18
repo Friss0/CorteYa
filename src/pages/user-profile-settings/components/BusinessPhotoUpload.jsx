@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Button from '../../../components/ui/Button';
 import AppImage from '../../../components/AppImage';
 import Icon from '../../../components/AppIcon';
-import { FirebaseBusinessPhotosService } from '../../../lib/firebase-business-photos';
+import FirebaseBusinessPhotosService from '../../../lib/firebase-business-photos';
 
 const BusinessPhotoUpload = ({ refreshTrigger }) => {
   // Get User ID from session

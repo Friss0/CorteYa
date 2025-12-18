@@ -5,7 +5,7 @@ import Select from '../../../components/ui/Select';
 import { Checkbox } from '../../../components/ui/Checkbox';
 import Icon from '../../../components/AppIcon';
 import Image from '../../../components/AppImage';
-import { FirebaseBusinessPhotosService } from '../../../lib/firebase-business-photos';
+import FirebaseBusinessPhotosService from '../../../lib/firebase-business-photos';
 import { CheckCircle, X } from 'lucide-react';
 
 const defaultOpeningHours = {
