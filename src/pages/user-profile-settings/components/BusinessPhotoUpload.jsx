@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Button from '../../../components/ui/Button';
-import Image from '../../../components/AppImage';
+import AppImage from '../../../components/AppImage';
 import Icon from '../../../components/AppIcon';
 import { FirebaseBusinessPhotosService } from '../../../lib/firebase-business-photos';
 
@@ -392,7 +392,7 @@ const BusinessPhotoUpload = () => {
               {/* Cover Photo Display */}
               <div className="relative w-full h-48 bg-muted overflow-hidden">
                 {coverPhoto ? (
-                  <Image
+                  <AppImage
                     src={coverPhoto}
                     alt="Foto de portada de la barbería"
                     className="w-full h-full object-cover"
@@ -439,7 +439,7 @@ const BusinessPhotoUpload = () => {
                 <div className="relative">
                   <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-card bg-muted flex items-center justify-center">
                     {profilePhoto ? (
-                      <Image
+                      <AppImage
                         src={profilePhoto}
                         alt="Foto de perfil de la barbería"
                         className="w-full h-full object-cover"
