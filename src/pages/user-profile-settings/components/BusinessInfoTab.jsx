@@ -8,6 +8,16 @@ import Image from '../../../components/AppImage';
 import { FirebaseBusinessPhotosService } from '../../../lib/firebase-business-photos';
 import { CheckCircle, X } from 'lucide-react';
 
+const defaultOpeningHours = {
+  monday: { open: '09:00', close: '20:00', closed: true },
+  tuesday: { open: '09:00', close: '20:00', closed: true },
+  wednesday: { open: '09:00', close: '20:00', closed: true },
+  thursday: { open: '09:00', close: '21:00', closed: true },
+  friday: { open: '09:00', close: '21:00', closed: true },
+  saturday: { open: '09:00', close: '18:00', closed: true },
+  sunday: { open: '10:00', close: '14:00', closed: true }
+};
+
 const BusinessInfoTab = ({ onUpdate }) => {
   // Get User ID from session
   const [userId, setUserId] = useState(null);
@@ -33,15 +43,7 @@ const BusinessInfoTab = ({ onUpdate }) => {
     lat: '',
     lng: '', // Coordinates required for Mobile Map
     services: [],
-    openingHours: {
-      monday: { open: '09:00', close: '20:00', closed: true },
-      tuesday: { open: '09:00', close: '20:00', closed: true },
-      wednesday: { open: '09:00', close: '20:00', closed: true },
-      thursday: { open: '09:00', close: '21:00', closed: true },
-      friday: { open: '09:00', close: '21:00', closed: true },
-      saturday: { open: '09:00', close: '18:00', closed: true },
-      sunday: { open: '10:00', close: '14:00', closed: true }
-    }
+    openingHours: defaultOpeningHours
   });
 
   // Barbers management
@@ -121,7 +123,7 @@ const BusinessInfoTab = ({ onUpdate }) => {
           lat: data.lat || '',
           lng: data.lng || '',
           services: data.services || [],
-          openingHours: data.openingHours || businessData.openingHours
+          openingHours: data.openingHours || defaultOpeningHours
         });
 
         // Populate Barbers and Services from loaded data
@@ -215,7 +217,7 @@ const BusinessInfoTab = ({ onUpdate }) => {
 
     // Strict Requirements for Map Visibility
     // 1. At least one day open
-    const hasOpenDay = Object.values(businessData.openingHours).some(day => !day.closed);
+    const hasOpenDay = Object.values(businessData.openingHours || {}).some(day => !day.closed);
     if (!hasOpenDay) {
       newErrors.openingHours = 'Debes abrir al menos un día para aparecer en el mapa';
     }
@@ -518,7 +520,7 @@ const BusinessInfoTab = ({ onUpdate }) => {
           </div>
 
           <div className="space-y-3">
-            {Object.entries(businessData.openingHours).map(([day, hours]) => (
+            {Object.entries(businessData.openingHours || defaultOpeningHours).map(([day, hours]) => (
               <div key={day} className="flex items-center space-x-4 p-3 bg-muted/30 rounded-md">
                 <div className="w-20 text-sm font-medium text-foreground">
                   {dayNames[day]}
