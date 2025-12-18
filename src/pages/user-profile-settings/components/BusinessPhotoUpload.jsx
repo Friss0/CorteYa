@@ -136,12 +136,12 @@ const BusinessPhotoUpload = () => {
         canvas.height
       );
 
-      // Convert canvas to blob
-      const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', 0.8));
-      const file = new File([blob], `${type}-photo.jpg`, { type: 'image/jpeg' });
+      // Convert canvas to Data URL (Base64) - Compression 0.7 for RTDB efficiency
+      const base64String = canvas.toDataURL('image/jpeg', 0.7);
 
       // Upload to Firebase using userId as businessId
-      const { data, error } = await FirebaseBusinessPhotosService.uploadPhoto(file, userId, type, userId);
+      // Note: uploadPhoto now accepts the Base64 string directly
+      const { data, error } = await FirebaseBusinessPhotosService.uploadPhoto(base64String, userId, type, userId);
 
       if (error) {
         throw error;

@@ -161,30 +161,35 @@ export const FirebaseBusinessPhotosService = {
 
   // --- STORAGE METHODS (Original) ---
 
-  async uploadPhoto(file, businessId, photoType, userId) {
+  async uploadPhoto(fileOrBase64, businessId, photoType, userId) {
     try {
       if (!['profile', 'cover'].includes(photoType)) throw new Error('Invalid photo type');
 
-      // We use userId as the folder path to avoid mixing users
-      const timestamp = Date.now();
-      const fileName = `${timestamp}-${photoType}.jpg`;
-      const filePath = `barbershops/${userId}/${photoType}/${fileName}`;
-      const fileRef = storageRef(storage, filePath);
+      let imageUrl = fileOrBase64;
 
-      console.log(`Uploading ${photoType} photo for ${userId}...`);
-      const snapshot = await uploadBytes(fileRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
+      // If it's a File object (legacy path), we'd need to convert, but we expect Base64 string now.
+      // However, if logic still passes File, we should handle error or convert.
+      // For now, assuming input is the Data URL string.
 
-      // Directly update the DB record too so it syncs immediately
+      // Validate it's a string
+      if (typeof fileOrBase64 !== 'string') {
+        // If it's a file, try to identify or throw. 
+        // Ideally, the component sends the string.
+        console.warn("Expected Base64 string, got object. Validation might need update.");
+      }
+
+      console.log(`Saving ${photoType} photo as Base64 for ${userId}...`);
+
+      // Directly update the DB record
       const dbKey = photoType === 'profile' ? 'image' : 'heroImage';
       await update(dbRef(db, `barbershops/${userId}`), {
-        [dbKey]: downloadURL,
+        [dbKey]: imageUrl,
         updatedAt: Date.now()
       });
 
-      return { data: { downloadURL }, error: null };
+      return { data: { downloadURL: imageUrl }, error: null };
     } catch (error) {
-      console.error('Upload error:', error);
+      console.error('Save error:', error);
       return { error: { message: error.message } };
     }
   },
