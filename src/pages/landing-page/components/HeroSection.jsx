@@ -58,22 +58,29 @@ const HeroSection = () => {
         aria-hidden="true"
       />
 
+      {/* Logo — desktop: absoluto (no ocupa espacio en el flujo) */}
+      <img
+        src="/assets/images/logo-sin-fondo.png"
+        alt="Corte Ya"
+        className="hidden md:block absolute top-20 left-[6%] lg:left-[10%] h-80 lg:h-96 w-auto object-contain z-10 pointer-events-none"
+      />
+
       <div className="container mx-auto px-6 lg:px-12 relative z-10 max-w-7xl">
 
-        {/* Logo — fila propia, alineada con la columna izquierda */}
-        <div className="w-full md:w-1/2 flex justify-center md:justify-start md:pl-20 lg:pl-8 pt-10 md:pt-16">
+        {/* Logo — mobile: inline en el flujo */}
+        <div className="md:hidden flex justify-center mt-6 mb-2">
           <img
             src="/assets/images/logo-sin-fondo.png"
             alt="Corte Ya"
-            className="h-80 md:h-96 w-auto object-contain"
+            className="h-64 w-auto object-contain"
           />
         </div>
 
         {/* Grid: texto | teléfono */}
-        <div className="grid md:grid-cols-2 gap-4 items-start mt-0">
+        <div className="grid md:grid-cols-2 gap-4 items-center">
 
           {/* Left Column: texto y botones desktop */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0 pt-4 md:pt-6">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0">
             <div className="md:pl-8">
               <h1 className="font-bold text-black leading-tight font-heading">
                 <span className="block text-lg md:text-xl lg:text-2xl whitespace-nowrap">
@@ -111,8 +118,8 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column: Phone Mockup */}
-          <div className="relative flex justify-center md:justify-center mt-8 md:mt-0">
-            <div className="relative z-10 w-full max-w-[220px] md:max-w-[340px]">
+          <div className="relative flex justify-center md:justify-center mt-6 md:mt-0">
+            <div className="relative z-10 w-full max-w-[200px] md:max-w-[340px]">
               <img
                 src="/assets/images/hero-phone.png"
                 alt="App Interface"
