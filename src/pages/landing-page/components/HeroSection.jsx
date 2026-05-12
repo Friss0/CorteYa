@@ -67,7 +67,7 @@ const HeroSection = () => {
             <img
               src="/assets/images/logo-sin-fondo.png"
               alt="Corte Ya"
-              className="h-64 md:h-80 w-auto object-contain mt-10 mb-4 md:ml-8"
+              className="h-80 md:h-96 w-auto object-contain mt-24 mb-4 md:ml-8"
             />
 
             {/* Headline */}
