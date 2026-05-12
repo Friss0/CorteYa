@@ -392,9 +392,9 @@ const BusinessDashboard = () => {
         />
 
         {/* Main Content - Updated margins to match admin panel */}
-        <div className={`flex-1 transition-all duration-200 ${sidebarCollapsed ? 'ml-14' : 'ml-52'}`}>
+        <div className={`flex-1 transition-all duration-200 ${sidebarCollapsed ? 'md:ml-14' : 'md:ml-52'}`}>
           {/* Top Bar */}
-          <header className="bg-card border-b border-border px-6 py-4">
+          <header className="bg-card border-b border-border pl-14 pr-4 py-4 md:px-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <Button
@@ -421,6 +421,7 @@ const BusinessDashboard = () => {
                   iconName="RefreshCw"
                   iconPosition="left"
                   onClick={() => window.location?.reload()}
+                  className="hidden md:flex"
                 >
                   Actualizar
                 </Button>

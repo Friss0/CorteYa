@@ -72,7 +72,7 @@ const FeaturesPage = () => {
                     <div className="bg-black rounded-[40px] overflow-hidden text-white shadow-2xl relative">
                         <div className="grid md:grid-cols-2 gap-8 items-stretch p-6 md:p-10 lg:p-12 pb-0 md:pb-0">
 
-                            <div className="flex flex-col justify-center space-y-6 text-left z-10 max-w-xl pb-12 md:pb-16">
+                            <div className="flex flex-col justify-center space-y-6 text-left z-10 max-w-xl pb-8 md:pb-16">
                                 <motion.h2
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
@@ -95,7 +95,7 @@ const FeaturesPage = () => {
                             </div>
 
                             {/* Phone Mockup Placeholder -- Aligned to bottom */}
-                            <div className="flex flex-col justify-end h-full relative z-10">
+                            <div className="hidden md:flex flex-col justify-end h-full relative z-10">
                                 <div className="flex justify-center md:justify-end translate-y-12 md:translate-y-20">
                                     <motion.div
                                         initial={{ opacity: 0, y: -50 }}

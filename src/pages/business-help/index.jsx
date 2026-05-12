@@ -63,9 +63,9 @@ const BusinessHelpPage = () => {
                     userRole={userData?.role}
                 />
 
-                <div className={`flex-1 transition-all duration-200 ${sidebarCollapsed ? 'ml-14' : 'ml-52'}`}>
+                <div className={`flex-1 transition-all duration-200 ${sidebarCollapsed ? 'md:ml-14' : 'md:ml-52'}`}>
                     {/* Header */}
-                    <header className="bg-card border-b border-border px-6 py-4">
+                    <header className="bg-card border-b border-border pl-14 pr-4 py-4 md:px-6">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-4">
                                 <Button
@@ -96,7 +96,7 @@ const BusinessHelpPage = () => {
                         </div>
                     </header>
 
-                    <main className="p-8 max-w-5xl mx-auto">
+                    <main className="p-4 md:p-8 max-w-5xl mx-auto">
                         <div className="mb-8">
                             <h2 className="text-2xl font-bold font-heading mb-4">Manuales de Usuario</h2>
                             <p className="text-muted-foreground mb-6">

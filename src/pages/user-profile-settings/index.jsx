@@ -98,10 +98,10 @@ const UserProfileSettings = () => {
         userRole="business"
       />
       {/* Main Content - Fixed margin to match admin panel and prevent overlap */}
-      <div className={`transition-all duration-200 ${sidebarCollapsed ? 'ml-14' : 'ml-52'
+      <div className={`transition-all duration-200 ${sidebarCollapsed ? 'md:ml-14' : 'md:ml-52'
         }`}>
         {/* Header */}
-        <header className="bg-card border-b border-border px-4 md:px-6 py-4">
+        <header className="bg-card border-b border-border pl-14 pr-4 py-4 md:px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button

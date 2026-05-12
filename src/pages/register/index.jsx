@@ -75,7 +75,7 @@ const RegisterPage = () => {
             <NavigationBar />
 
             {/* Main Content Area - Flex Grow to push footer down */}
-            <div className="flex-grow relative flex items-center justify-center py-24 px-6 overflow-hidden">
+            <div className="flex-grow relative flex items-center justify-center py-12 md:py-24 px-4 md:px-6 overflow-hidden">
                 {/* Right Side Black Square/Background */}
                 <div className="absolute top-0 right-0 bottom-0 w-[30%] lg:w-[35%] bg-black hidden lg:block z-0"></div>
 

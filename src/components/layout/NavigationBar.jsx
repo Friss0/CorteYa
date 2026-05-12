@@ -13,7 +13,7 @@ const NavigationBar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-50">
-      <div className="max-w-[1800px] mx-auto px-8 md:px-16 lg:px-24">
+      <div className="max-w-[1800px] mx-auto px-4 md:px-16 lg:px-24">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
@@ -87,6 +87,13 @@ const NavigationBar = () => {
                   {link.name}
                 </Link>
               ))}
+              <Link
+                to="/registro"
+                className="text-left text-black hover:text-gray-600 font-medium py-2 transition-colors duration-200"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Registrar mi barbería
+              </Link>
             </div>
           </div>
         )}
