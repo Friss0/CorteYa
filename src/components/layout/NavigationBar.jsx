@@ -21,7 +21,7 @@ const NavigationBar = () => {
               <img
                 src="/assets/images/logo1-1758650906205.png"
                 alt="Corte Ya"
-                className="h-10 w-auto transform scale-150 hover:scale-[1.6] transition-transform duration-200"
+                className="h-10 w-auto transform origin-left scale-125 md:scale-150 hover:scale-[1.35] md:hover:scale-[1.6] transition-transform duration-200"
               />
             </Link>
           </div>

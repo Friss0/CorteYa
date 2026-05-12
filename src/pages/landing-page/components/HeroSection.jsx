@@ -86,8 +86,8 @@ const HeroSection = () => {
                 </span>
               </h1>
 
-              {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto pt-10 justify-center md:justify-start">
+              {/* Desktop buttons */}
+              <div className="hidden md:flex flex-row gap-3 pt-10 justify-start">
                 <Button
                   variant="default"
                   className="bg-black text-white hover:bg-gray-800 px-6 py-3 rounded-xl font-medium text-base min-w-[150px] shadow-lg hover:shadow-xl transition-all"
@@ -108,8 +108,8 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column: Phone Mockup */}
-          <div className="relative flex justify-center md:justify-center mt-12 md:mt-0">
-            <div className="relative z-10 w-full max-w-[280px] md:max-w-[340px]">
+          <div className="relative flex justify-center md:justify-center mt-8 md:mt-0">
+            <div className="relative z-10 w-full max-w-[220px] md:max-w-[340px]">
               <img
                 src="/assets/images/hero-phone.png"
                 alt="App Interface"
@@ -119,6 +119,26 @@ const HeroSection = () => {
           </div>
 
         </div>
+
+        {/* Mobile buttons — below phone */}
+        <div className="md:hidden flex flex-row justify-center gap-3 mt-6 pb-8">
+          <Button
+            variant="default"
+            className="bg-black text-white hover:bg-gray-800 px-4 py-2 rounded-xl font-medium text-sm shadow-md transition-all"
+            onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Descargar app
+          </Button>
+
+          <Button
+            variant="outline"
+            className="bg-white border-2 border-black text-black hover:bg-black hover:text-white px-4 py-2 rounded-xl font-medium text-sm transition-all"
+            onClick={() => navigate('/registro')}
+          >
+            Unite a Corte Ya
+          </Button>
+        </div>
+
       </div>
     </section>
   );
