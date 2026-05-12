@@ -121,14 +121,12 @@ const BusinessSection = () => {
 
                     {/* Right Column: Mockup Card */}
                     <motion.div
-                        className="bg-black rounded-[40px] p-8 md:p-12 flex items-center justify-center relative overflow-hidden min-h-[500px] md:min-h-[600px] shadow-2xl order-1 lg:order-2"
+                        className="flex items-center justify-center relative min-h-[500px] md:min-h-[600px] order-1 lg:order-2"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         variants={fadeInUpVariants}
                     >
-                        {/* Placeholder for Mockup - ANIMATED SEPARATELY WITH DELAY */}
-                        {/* Mockup Image - Centered and Floating */}
                         <motion.img
                             src="/assets/images/app-detail-mockup.png"
                             alt="Corte Ya Detail Screen"
@@ -138,9 +136,6 @@ const BusinessSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
                         />
-                        {/* Decorative circles */}
-                        <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
-                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-green-500/20 rounded-full translate-y-1/2 translate-x-1/2 blur-2xl"></div>
                     </motion.div>
 
                 </div>

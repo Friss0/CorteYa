@@ -21,14 +21,12 @@ const FeaturesSplitSection = () => {
 
                     {/* Left Column: Mockup Card */}
                     <motion.div
-                        className="bg-black rounded-[40px] p-8 md:p-12 flex items-center justify-center relative overflow-hidden min-h-[500px] md:min-h-[600px] shadow-2xl"
+                        className="flex items-center justify-center relative min-h-[500px] md:min-h-[600px]"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.3 }}
                         variants={fadeInUpVariants}
                     >
-                        {/* Placeholder for Mockup - ANIMATED SEPARATELY WITH DELAY */}
-                        {/* Mockup Image - Centered and Floating */}
                         <motion.img
                             src="/assets/images/map-mockup-v3.png"
                             alt="Corte Ya App Map"
@@ -38,10 +36,6 @@ const FeaturesSplitSection = () => {
                             viewport={{ once: true }}
                             transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
                         />
-
-                        {/* Decorative circles */}
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
                     </motion.div>
 
                     {/* Right Column: Content */}
