@@ -65,7 +65,7 @@ const HeroSection = () => {
           <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6 max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0">
             {/* Logo */}
             <img
-              src="/assets/images/logo1-1758650906205.png"
+              src="/assets/images/logo-sin-fondo.png"
               alt="Corte Ya"
               className="h-28 md:h-36 w-auto object-contain mb-4 md:ml-8"
             />
