@@ -70,10 +70,10 @@ const HeroSection = () => {
         </div>
 
         {/* Grid: texto | teléfono */}
-        <div className="grid md:grid-cols-2 gap-4 items-center -mt-4 md:-mt-8">
+        <div className="grid md:grid-cols-2 gap-4 items-start mt-0">
 
           {/* Left Column: texto y botones desktop */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0">
+          <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0 pt-4 md:pt-6">
             <div className="md:pl-8">
               <h1 className="font-bold text-black leading-tight font-heading">
                 <span className="block text-lg md:text-xl lg:text-2xl whitespace-nowrap">
