@@ -59,18 +59,21 @@ const HeroSection = () => {
       />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10 max-w-7xl">
-        <div className="grid md:grid-cols-2 gap-4 items-center">
 
-          {/* Left Column: Content */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-6 max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0">
-            {/* Logo */}
-            <img
-              src="/assets/images/logo-sin-fondo.png"
-              alt="Corte Ya"
-              className="h-80 md:h-96 w-auto object-contain mt-24 mb-4 md:ml-8"
-            />
+        {/* Logo — fila propia, alineada con la columna izquierda */}
+        <div className="w-full md:w-1/2 flex justify-center md:justify-start md:pl-20 lg:pl-8 pt-10 md:pt-16">
+          <img
+            src="/assets/images/logo-sin-fondo.png"
+            alt="Corte Ya"
+            className="h-80 md:h-96 w-auto object-contain"
+          />
+        </div>
 
-            {/* Headline */}
+        {/* Grid: texto | teléfono */}
+        <div className="grid md:grid-cols-2 gap-4 items-center -mt-4 md:-mt-8">
+
+          {/* Left Column: texto y botones desktop */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0">
             <div className="md:pl-8">
               <h1 className="font-bold text-black leading-tight font-heading">
                 <span className="block text-lg md:text-xl lg:text-2xl whitespace-nowrap">
