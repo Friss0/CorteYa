@@ -62,7 +62,7 @@ const HeroSection = () => {
       <img
         src="/assets/images/logo-sin-fondo.png"
         alt="Corte Ya"
-        className="hidden md:block absolute top-20 left-[16%] lg:left-[20%] h-80 lg:h-96 w-auto object-contain z-10 pointer-events-none"
+        className="hidden md:block absolute top-20 left-[10%] lg:left-[13%] h-80 lg:h-96 w-auto object-contain z-10 pointer-events-none"
       />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10 max-w-7xl">
