@@ -81,7 +81,7 @@ const HeroSection = () => {
 
           {/* Left Column: texto y botones desktop */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl mx-auto md:ml-auto md:mr-0 md:pl-12 lg:pl-0">
-            <div className="md:pl-8">
+            <div className="md:pl-8 md:pt-52">
               <h1 className="font-bold text-black leading-tight font-heading">
                 <span className="block text-lg md:text-xl lg:text-2xl whitespace-nowrap">
                   Gestioná tu barbería de forma más simple.
